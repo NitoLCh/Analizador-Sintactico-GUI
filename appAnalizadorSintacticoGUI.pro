@@ -18,7 +18,12 @@ HEADERS += \
     analizadorlexico.h \
     archivos.h \
     dialog.h \
-    sintactico.h \
+#<<<<<<< HEAD
+ #   sintactico.h \
+#=======
+    sintactico.h
+
+#>>>>>>> ec1d35b0d614b04edd53a97ca2b3b8c443d2af2d
 FORMS += \
     dialog.ui
 

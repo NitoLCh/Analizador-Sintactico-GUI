@@ -10,8 +10,7 @@ Archivos::Archivos()
 
 }
 
-
-void Archivos::generararch(FILE *Fd)
+void Archivos::generarArchivo(FILE *Fd)
 {
     char car;
     char nomArch[100];
@@ -58,9 +57,10 @@ void Archivos::generararch(FILE *Fd)
     }while(car != '@');
 
     fclose(Fd);
+
 }
 
-void Archivos::vabrirarch(FILE *Fd)
+void Archivos::abrirArchivo(FILE *Fd)
 {
     char nomArch[100];
     //char nombre[100];
@@ -89,10 +89,9 @@ void Archivos::vabrirarch(FILE *Fd)
         printf("EL ARCHIVO SE ENCUENTRA ABIERTO \n");
 
     }
-
 }
 
-int Archivos::bytesarch(FILE *Fd)
+int Archivos::byteArchivo(FILE *Fd)
 {
     int aux;
     fseek(Fd,0L,SEEK_END);
@@ -100,3 +99,5 @@ int Archivos::bytesarch(FILE *Fd)
     fseek(Fd,0L,SEEK_SET);
     return aux;
 }
+
+
