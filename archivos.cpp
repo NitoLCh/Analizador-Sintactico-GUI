@@ -10,6 +10,7 @@ Archivos::Archivos()
 
 }
 
+<<<<<<< HEAD
 void Archivos::generarArchivo(FILE *Fd)
 {
     char car;
@@ -89,6 +90,16 @@ void Archivos::abrirArchivo(FILE *Fd)
         printf("EL ARCHIVO SE ENCUENTRA ABIERTO \n");
 
     }
+=======
+
+void Archivos::generararch(FILE *Fd){
+
+}
+
+void Archivos::vabrirarch(FILE *Fd){
+
+
+>>>>>>> cambios de la clase archivo
 }
 
 int Archivos::byteArchivo(FILE *Fd)

@@ -1,13 +1,8 @@
 #ifndef ARCHIVOS_H
 #define ARCHIVOS_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include <iostream>
-
-
-
+#include <fstream>
 
 class Archivos
 {
