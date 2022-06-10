@@ -11,11 +11,17 @@ CONFIG += c++11
 SOURCES += \
     analizadorlexico.cpp \
     main.cpp \
-    dialog.cpp
+    dialog.cpp \
+    sintactico.cpp
 
 HEADERS += \
+<<<<<<< HEAD
     analizadorlexico.h \
     dialog.h
+=======
+    dialog.h \
+    sintactico.h
+>>>>>>> de1ca4d (AVANCE DE LA CLASE SINTACTICO)
 
 FORMS += \
     dialog.ui
