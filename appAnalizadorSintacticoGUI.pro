@@ -9,27 +9,17 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-<<<<<<< HEAD
     analizadorlexico.cpp \
-=======
     archivos.cpp \
->>>>>>> 2a3b3aa (CLASE DE ARCHIVOS)
     main.cpp \
     dialog.cpp \
     sintactico.cpp
 
 HEADERS += \
-<<<<<<< HEAD
-<<<<<<< HEAD
     analizadorlexico.h \
-=======
     archivos.h \
->>>>>>> 2a3b3aa (CLASE DE ARCHIVOS)
-    dialog.h
-=======
     dialog.h \
     sintactico.h
->>>>>>> de1ca4d (AVANCE DE LA CLASE SINTACTICO)
 
 FORMS += \
     dialog.ui
