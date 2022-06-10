@@ -11,9 +11,10 @@ CONFIG += c++11
 SOURCES += \
     analizadorlexico.cpp \
     archivos.cpp \
+#>>>>>>> 2a3b3aa (CLASE DE ARCHIVOS)
     main.cpp \
     dialog.cpp \
-    sintactico.cpp
+    sintactico.cpp \
 
 HEADERS += \
     analizadorlexico.h \
@@ -22,7 +23,7 @@ HEADERS += \
     sintactico.h
 
 FORMS += \
-    dialog.ui
+    dialog.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
