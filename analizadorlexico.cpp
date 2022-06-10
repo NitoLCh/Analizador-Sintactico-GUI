@@ -1,158 +1,230 @@
 #include "analizadorlexico.h"
+//Water was here!!
+
 AnalizadorLexico::AnalizadorLexico()
 {
-
 }
+
 void AnalizadorLexico::scanner(string cadena, string *resultado)
 {
-    char caracter;
-    inicializaEstados();
+    char caracter;  //Variable caracter donde se guarda el caracter que se lee
+    inicializaEstados();    //se inicializan los estados a 0
     i = inicioToken = 0;
 
+    //Se permanece en el ciclo while si i es menor a la longitud de la cadena o estado de aceptacion es true
     while(i < cadena.length() || estadoAceptacion()){
+        //Con el switch nos movemos entre los casos dependiendo del valor del estadoActual
         switch (estadoActual) {
-            //DELIMITADORES
+        //--------------------------- Casos para delimitadores ----------------------------------//
         case 0: caracter = leerCar(cadena);
+                //si es delimitador entra al if y cambia el estado actual, de lo contrario va a fallo()
                 if(esDelimitador(caracter))
                     estadoActual = 1;
                 else
                     fallo();
         break;
         case 1: caracter = leerCar(cadena);
+                //si es delimitador entra al if y se queda en el mismo estado actual, de lo contrario pasa al estado actual 2
                 if(esDelimitador(caracter))
                     estadoActual = 1;
                 else
                     estadoActual = 2;
         break;
+                //Se llama al metodo retrocederCar
         case 2: retrocederCar();
+                //a la variable resultado se le concatena "delimitador" y un salto de linea
                 *resultado += "DELIMITADOR\n";
+                //se vuelven a inicializar los estados
                 inicializaEstados();
+                //y establecemos iniciotoken en la posicion de i
                 inicioToken = i;
         break;
         case 3: caracter = leerCar(cadena);
+                //si el caracter es letra o "_" entonces entra al if, de lo contrario se va a fallo()
                 if(esLetra(caracter) || caracter == '_'){
+                    //a la variable reservada se guardan y concatenan el caracter que es letra
                     reservada += caracter;
                     estadoActual = 4;
                 }
                 else{
+                    //si no solo establece que resrvada es cadena vacias
                     reservada = "";
                     fallo();
                 }
         break;
         case 4: caracter = leerCar(cadena);
+                //si el caracter es letra o es digito o es "_" entonces se queda en el mismo estado, de lo contrario se va al
+                //siguiente estado estadoActual=5
                 if(esLetra(caracter) || esDigito(caracter) || caracter == '_')
                 {
+                    //a la variable reservada se guardan y concatenan el caracter que es letra
                     reservada += caracter;
+                    //se queda en el mismo estado mientras el if de arriba se cumpla
                     estadoActual = 4;
                 }
                 else
                     estadoActual = 5;
             break;
+                //se llama al metodo retrocederCar()
         case 5: retrocederCar();
-                if(esReservada(reservada))
+                //llama al metodo esReservada, donde recibe la variable reservada
+                if(esReservada(reservada)) //si es reservada entra al if, de lo contrario va al else
                 {
+                    //en la variable resultado se guarda y concatena "palabra reservada" y un salto de linea
                     *resultado += "PALABRA RESERVADA\n";
+                    //se inicializan los estados
                     inicializaEstados();
+                    //y establecemos iniciotoken en la posicion i
+                    inicioToken = i;
+                } else {
+                    //en la variable resultado se guarda y concatena "identificador" y un salto de linea
+                    *resultado += "IDENTIFICADOR\n";
+                    //se inicializan los estados
+                    inicializaEstados();
+                    //y establecemos iniciotoken en la posicion i
                     inicioToken = i;
                 }
-                else{
-                //reservada="";
-                *resultado += "IDENTIFICADOR\n";
-                inicializaEstados();
-                inicioToken = i;
-                }
         break;
-                //Numeros
+        //---------------------------- Casos para Numeros ---------------------------------------//
         case 6: caracter = leerCar(cadena);
+                //si es digito entra en el if, de lo contrario se va a fallo()
                 if(esDigito(caracter))
                     estadoActual = 7;
                 else
                     fallo();
         break;
         case 7: caracter = leerCar(cadena);
+                //si es digito entra al if y permanece en el mismo estado
                 if(esDigito(caracter))
                     estadoActual = 7;
+                //si en el mismo estado se encuentra antes o despues un "." entonces va al estado 9
                 else if(caracter == '.')
-                        estadoActual = 9;
-                     else
-                        estadoActual = 8;
+                    estadoActual = 9;
+                else //si no es digito y no recibe "." entonces solo va al estado 8
+                    estadoActual = 8;
         break;
+                //se llama al metodo retrocederCar();
         case 8: retrocederCar();
+                //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                 *resultado += "NUMERO ENTERO\n";
+                //se inicializan los estados
                 inicializaEstados();
+                //y se establece iniciotoken en la posicion i
                 inicioToken = i;
         break;
         case 9: caracter = leerCar(cadena);
+                //si es digito entonces va al estado 9, de lo contrario va al estado 10
                 if(esDigito(caracter))
                     estadoActual = 9;
                 else
                     estadoActual = 10;
         break;
+                //se llama al metodo retrocederCar();
         case 10: retrocederCar();
+                //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                 *resultado += "NUMERO REAL\n";
+                //se inicializan los estados
                 inicializaEstados();
+                //y se establece iniciotoken en la posicion i
                 inicioToken = i;
         break;
         case 11: caracter = leerCar(cadena);
+                //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
                  if(caracter == '=')
                      estadoActual = 12;
                  else
                      fallo();
         break;
-                 //OPERADOR DE ASIGNACION
+        //----------------------------------- Operadores ----------------------------------------//
+                 //se lee el caracter y va al estado 13..... en realidad no se para que es este caso, solo pasa al caso siguiente
         case 12: caracter = leerCar(cadena);
                  estadoActual = 13;
         break;
+                 //se llama al metodo retrocederCar();
         case 13: retrocederCar();
+                //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                  *resultado += "OPERADOR DE ASIGNACION\n";
+                //se inicializan los estados
                  inicializaEstados();
+                 //y se establece iniciotoken en la posicion i
                  inicioToken = i;
         break;
         case 14: caracter = leerCar(cadena);
+                //si el caracter leído es alguno de los operadores aritmeticos (+,-,*,/,%)
+                //entonces va al estado 15, de lo contrario va a fallo()
                  if(caracter == '+' || caracter == '-' || caracter == '*' || caracter == '/' || caracter == '%')
                      estadoActual = 15;
                  else
                      fallo();
         break;
+                 //se vuelve a leer el caracter, y va al estado 16..... no se porque esta un caso de mas, pero bueno va al caso siguiente
         case 15: caracter = leerCar(cadena);
                  estadoActual = 16;
         break;
+                 //se llama a retrocederCar();
         case 16: retrocederCar();
+                //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                  *resultado += "OPERADOR ARITMETICO\n";
+                //se inicializan los estados
                  inicializaEstados();
+                 //y se establece iniciotoken en la posicion i
                  inicioToken = i;
         break;
+        //------------------------------- Fin de los casos -----------------------------------//
         case 17:
+            //Aqui se comprueba si caracter es ";", con esto podemos verificar si ya termino la sentencia
             if(caracter==';')
             {
+                //en la variable resultado se guarda y concatena "Fin" y un salto de linea
                 *resultado += "$ FIN\n";
+                //se incrementa i para salir del while
                 i++;
+                //y establecemos estadoActual = 19, igual para no mantener el while
                 estadoActual=19;
-                             }
+            }
             break;
         }
     }
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para leer el caracter (se necesita para cada caso)
 char AnalizadorLexico::leerCar(string car)
 {
-  char carActual;
-  carActual=car.at(i);
-  i++;
-  return carActual;
+    //variable para guardar el caracter actual de la cadena
+    char carActual;
+    //toma la posicion del caracter
+    carActual=car.at(i);
+    //se incrementa i
+    i++;
+    //y se retorna carActual
+    return carActual;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para retroceder un caracter en la cadena
 void AnalizadorLexico::retrocederCar()
 {
+   //Solo se decrementa la i para regresar un caracter en la cadena
    i--;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo parar inicializar los estados inicial y actual
 void AnalizadorLexico::inicializaEstados()
 {
     estadoInicial = estadoActual = 0;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para saltar de un caso a otro caso (por ejemplo si no es delimitador pasa comprobar si es numero)
 void AnalizadorLexico::fallo()
 {
+    //toma el estado inicial para moverse en el switch con los casos
     switch (estadoInicial) {
             case 0: estadoInicial = 3; i = inicioToken; break;
             case 3: estadoInicial = 6; i = inicioToken; break;
@@ -161,11 +233,11 @@ void AnalizadorLexico::fallo()
             case 14: estadoInicial = 17; i = inicioToken; break;
             case 17: estadoInicial = 18; i= inicioToken;break;
     }
+    //guarda el valor de estado inicial en la variable estado actual
     estadoActual = estadoInicial;
 }
 
-
-
+//-------------------------------------------------------------------------------------------------------------------------------//
 
 bool AnalizadorLexico::estadoAceptacion()
 {
@@ -210,10 +282,6 @@ bool AnalizadorLexico::esReservada(string cadena)
 
     return false;
 }
-
-
-
-
 
 void AnalizadorLexico::getTokens(string *STokens){
 
