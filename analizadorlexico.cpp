@@ -170,8 +170,63 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                  //y se establece iniciotoken en la posicion i
                  inicioToken = i;
         break;
-        //------------------------------- Fin de los casos -----------------------------------//
+
         case 17:
+            caracter = leerCar(cadena);
+                            //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+                             if(caracter == '(')
+                                 estadoActual = 18;
+                             else
+                                 fallo();
+        //(
+        case 18:
+        //final (
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "PARANTESIS I\n";
+                            //se inicializan los estados
+                             inicializaEstados();
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
+        case 19:
+        //)
+             caracter = leerCar(cadena);
+            //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+             if(caracter ==')')
+                 estadoActual = 20;
+             else
+                 fallo();
+        case 20:
+        //final)
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "PARANTESIS D\n";
+                            //se inicializan los estados
+                             inicializaEstados();
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
+
+        case 21:
+        //{
+        case 22:
+        //final {
+        case 23:
+        //}
+        case 24:
+        //final}
+
+        case 25:
+        //[
+        case 26:
+        //final [
+        case 27:
+        //[
+        case 28:
+        //final ]
+
+        //------------------------------- Fin de los casos -----------------------------------//
+
+        case 25:
             //Aqui se comprueba si caracter es ";", con esto podemos verificar si ya termino la sentencia
             if(caracter==';')
             {
