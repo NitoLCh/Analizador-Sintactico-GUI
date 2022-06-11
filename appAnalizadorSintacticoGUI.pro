@@ -15,23 +15,14 @@ SOURCES += \
     dialog.cpp \
     pila.cpp \
     sintactico.cpp \
-#<<<<<<< HEAD
-#=======
-
-#>>>>>>> f1d1d2f5047b714c642fbc238b252afff4b6f748
 HEADERS += \
     analizadorlexico.h \
     archivos.h \
     dialog.h \
-#<<<<<<< HEAD
- #   sintactico.h \
-#=======
     pila.h \
     sintactico.h
-
-#>>>>>>> ec1d35b0d614b04edd53a97ca2b3b8c443d2af2d
 FORMS += \
-    dialog.ui \
+    dialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
