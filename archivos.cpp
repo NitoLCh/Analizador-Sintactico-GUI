@@ -3,21 +3,35 @@
 #include "string"
 #include "stdlib.h"
 #include "stdio.h"
+//Commented by Water :p
 using namespace std;
 
+//Otro constructor vacio...
 Archivos::Archivos(){
-
+    //Mis esperanzas de pasar con claudia estan aqui...
+    //Asi es, no hay nada, no hay esperanzas :c
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para generar el archivo, donde se recibe el identificador de X archivo
 void Archivos::generarArchivo(fstream *Fd){
-    char caracter;
-    char buffer[100];
-
+    char caracter;// Variable caracter para guardar un char
+    char buffer[100]; // buffer array para guardar simplemente info
     string nombre;
-    printf("Nombre del Archivo a GENERAR (sin extension): ");
-                    //gets(Nombre);  //<--- ERROR CON ESTE METODO
-    cin>>nombre;
 
+    //Se puede usar tambien puts("Nombre del Archivo a GENERAR (sin extension): "); pero puts ya esta fuera de onda y es de C
+    //printf mola mas c:
+    printf("Nombre del Archivo a GENERAR (sin extension): ");
+    //gets(Nombre); //<--- ERROR CON ESTE METODO
+    //usar gets ya no es recomendado ya que esta funcion no reconoce si quiera el tamaño de la cadena que se la va a pasar
+    //gets solo lee los datos de entrada hasta el final, ocasionado problemas en caso de tener un array declarado con cierto tamaño
+    //e ingresamos mas caracteres de los que se puede almacenar en dicho array.... esta fuera de onda igual que puts jejej
+
+    cin>>nombre; // Se usa un cinpara tomar y almacenar el nombre del archivo, sip, cin (o scanf) mola mas que gets (ง •̀_•́)ง
+
+    //La funcion sprintf la usamos para escribir en la salida que se genera
+    //En este caso al nombre del archivo se le concatena el tipo de formato que sera el archivo, el cual es .dat (espero no equivocarme, no me mates jorge D:)
     sprintf(buffer,"%s.dat",nombre.c_str());
     Fd->open(nombre, fstream::binary|fstream::out|fstream::in|fstream::trunc);
     if(Fd == NULL){
@@ -74,6 +88,7 @@ void Archivos::abrirArchivo(fstream *Fd)
 }
 
 int Archivos::bytesArchivo(fstream *Fd){
+    //variable aux donde se guardara y retornara el tamaño en bytes
     int aux;
     //fseek(Fd,0L,SEEK_END);
     Fd->seekg(1, std::ios::end);

@@ -17,6 +17,7 @@ public:
     int i, inicioToken, estadoInicial, estadoActual;
     string reservada = "";
 
+    //palabras reservadas
     char palabras[3][6] = {"int", "char", "float"};
     char op[5] = {'+','-', '*', '/', '%'};
     string Tokens[20];
@@ -32,9 +33,13 @@ public:
     bool esLetra(char c);
     bool esDigito(char c);
     bool esReservada(string palabra);
+<<<<<<< HEAD
 
 
     //Pruneda se te olvido definir getTokens aca xD
+=======
+    //Pruneda se te olvido definir getTokens aca xd
+>>>>>>> ed193d0376293c061c4aec3da037f5e0038ba2be
     void getTokens(string *STokens);
 };
 

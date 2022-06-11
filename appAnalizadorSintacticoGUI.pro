@@ -1,5 +1,5 @@
-QT       += core gui
-
+QT += core gui
+#Water was here!!! (^u^)/
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -14,13 +14,18 @@ SOURCES += \
     main.cpp \
     dialog.cpp \
     pila.cpp \
-    sintactico.cpp
+    sintactico.cpp #Aqui termina la carpeta sources
+    #PD: No es necesario poner el "\" en el ultimo archivo de sources y headers, de esta forma se separan por carpetas...
+    #bueno al menos en mi caso
+
 HEADERS += \
     analizadorlexico.h \
     archivos.h \
     dialog.h \
     pila.h \
     sintactico.h
+    #aplica igual aca, solo el ultimo no termina con "\"
+
 FORMS += \
     dialog.ui
 
