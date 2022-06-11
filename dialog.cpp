@@ -1,6 +1,7 @@
 #include "dialog.h"
-#include
 #include "ui_dialog.h"
+
+// PRUNEDA NO HAGAS PUSH SIN AUTORIZACION DE JORGE D:<
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)

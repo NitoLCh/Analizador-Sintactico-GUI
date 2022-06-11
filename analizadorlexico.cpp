@@ -1,5 +1,5 @@
 #include "analizadorlexico.h"
-//Water was here!!
+//Commented by Water :3
 
 AnalizadorLexico::AnalizadorLexico()
 {
@@ -9,7 +9,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
 {
     char caracter;  //Variable caracter donde se guarda el caracter que se lee
     inicializaEstados();    //se inicializan los estados a 0
-    i = inicioToken = 0;
+    i = inicioToken = 0;    // iniciotoken e i se inicializan en 0
 
     //Se permanece en el ciclo while si i es menor a la longitud de la cadena o estado de aceptacion es true
     while(i < cadena.length() || estadoAceptacion()){
@@ -239,8 +239,10 @@ void AnalizadorLexico::fallo()
 
 //-------------------------------------------------------------------------------------------------------------------------------//
 
+//Metodo para cuando se llegue a un estado de aceptacion
 bool AnalizadorLexico::estadoAceptacion()
 {
+    //toma el estado actual y define si entra en estado de aceptacion, de ser asi regresa un true, de lo contrario (Default) regresa un false
     switch(estadoActual){
             case 2:
             case 5:
@@ -251,43 +253,64 @@ bool AnalizadorLexico::estadoAceptacion()
             case 17:
             case 18:
             return true;
+            //por defecto regresa un false, tiene que entrar si o si en uno de los casos
             default: return false;
         }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para analizar si es delimitador o no el caracter que recibe
 bool AnalizadorLexico::esDelimitador(char c)
 {
+    //retorna c solo si es igual a un salto de linea, a una tabulacion o a un espacio vacio
     return c == '\n' || c == '\t' || c == ' ';
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para analizar si es letra o no el caracter que recibe
 bool AnalizadorLexico::esLetra(char c)
 {
+    //retorna c solo si c se encuentra en el rango de letras mayusculas o minusculas (se puede usar tambien el ASCII)
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para analizar si es digito o no el caracter que se recibe
 bool AnalizadorLexico::esDigito(char c)
 {
+    //retorna c solo si se encuentra en el rango de numeros (del 0 al 9, tambien se puede usar ASCII...... pero la neta es mas facil
+    //con los numeros normales xD)
     return c >= '0' && c <= '9';
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para analizar si es palabra reservada o no el caracter que se recibe
 bool AnalizadorLexico::esReservada(string cadena)
 {
-    int i = 0;
+    int i = 0; //Variable int donde se inicializa en 0
+    //ciclo while donde i debe ser menor o igual al tamaño de palabras
     while(i <= (int)sizeof(palabras)){
+        //si la la cadena que recibe coincide con la posicion de la palabra entonces entra en el if
         if(cadena == palabras[i]){
             return true;
         }
+        //Luego se incrementa i para movernos en el array palabras
          i++;
         }
-
     return false;
 }
 
-void AnalizadorLexico::getTokens(string *STokens){
+//-------------------------------------------------------------------------------------------------------------------------------//
 
+//Metodo para analizar los tokens, recibe como parametro los tokens (PD: no entendi muy bien este metodo, sorry :p)
+void AnalizadorLexico::getTokens(string *STokens){
     for(int i = 0;i<this->i;i++ )
     {
-        STokens[i]=Tokens[i];
+        STokens[i]=STokens[i];
     }
 
 }

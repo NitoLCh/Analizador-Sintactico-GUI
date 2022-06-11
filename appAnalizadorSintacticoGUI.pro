@@ -15,10 +15,10 @@ SOURCES += \
     dialog.cpp \
     pila.cpp \
     sintactico.cpp \
-<<<<<<< HEAD
-=======
+#<<<<<<< HEAD
+#=======
 
->>>>>>> f1d1d2f5047b714c642fbc238b252afff4b6f748
+#>>>>>>> f1d1d2f5047b714c642fbc238b252afff4b6f748
 HEADERS += \
     analizadorlexico.h \
     archivos.h \
