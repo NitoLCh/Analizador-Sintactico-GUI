@@ -1,6 +1,9 @@
 #include "analizadorlexico.h"
 //Commented by Water :3
 
+#include "pila.h"
+
+
 //Un constructor solito solitario..... o es un metodo vacio? ¯\_(ツ)_/¯
 AnalizadorLexico::AnalizadorLexico()
 {
@@ -16,7 +19,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
     i = inicioToken = 0;    // iniciotoken e i se inicializan en 0
 
     //Se permanece en el ciclo while si i es menor a la longitud de la cadena o estado de aceptacion es true
-    while(i < cadena.length() || estadoAceptacion()){
+    while(i < (int)cadena.length() || estadoAceptacion()){
         //Con el switch nos movemos entre los casos dependiendo del valor del estadoActual
         switch (estadoActual) {
         //--------------------------- Casos para delimitadores ----------------------------------//
@@ -76,7 +79,8 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 {
                     //en la variable resultado se guarda y concatena "palabra reservada" y un salto de linea
                     *resultado += "PALABRA RESERVADA\n";
-                    //se inicializan los estados
+
+                                      //se inicializan los estados
                     inicializaEstados();
                     //y establecemos iniciotoken en la posicion i
                     inicioToken = i;
@@ -174,8 +178,63 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                  //y se establece iniciotoken en la posicion i
                  inicioToken = i;
         break;
-        //------------------------------- Fin de los casos -----------------------------------//
+
         case 17:
+            caracter = leerCar(cadena);
+                            //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+                             if(caracter == '(')
+                                 estadoActual = 18;
+                             else
+                                 fallo();
+        //(
+        case 18:
+        //final (
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "PARANTESIS I\n";
+                            //se inicializan los estados
+                             inicializaEstados();
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
+        case 19:
+        //)
+             caracter = leerCar(cadena);
+            //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+             if(caracter ==')')
+                 estadoActual = 20;
+             else
+                 fallo();
+        case 20:
+        //final)
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "PARANTESIS D\n";
+                            //se inicializan los estados
+                             inicializaEstados();
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
+
+        case 21:
+        //{
+        case 22:
+        //final {
+        case 23:
+        //}
+        case 24:
+        //final  }
+
+        case 25:
+        //[
+        case 26:
+        //final [
+        case 27:
+        //[
+        case 28:
+        //final ]
+
+        //------------------------------- Fin de los casos -----------------------------------//
+
+        case 25:
             //Aqui se comprueba si caracter es ";", con esto podemos verificar si ya termino la sentencia
             if(caracter==';')
             {
@@ -293,20 +352,24 @@ bool AnalizadorLexico::esDigito(char c)
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 //Metodo para analizar si es palabra reservada o no el caracter que se recibe
-bool AnalizadorLexico::esReservada(string cadena)
+string AnalizadorLexico::Reservada(string cadena)
 {
+    string res;
     int i = 0; //Variable int donde se inicializa en 0
     //ciclo while donde i debe ser menor o igual al tamaño de palabras
     while(i <= (int)sizeof(palabras)){
         //si la la cadena que recibe coincide con la posicion de la palabra entonces entra en el if
         if(cadena == palabras[i]){
-            return true;
+            return (res=palabras[i]);
         }
         //Luego se incrementa i para movernos en el array palabras
          i++;
         }
-    return false;
+    return res;
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------//
+
 
 //-------------------------------------------------------------------------------------------------------------------------------//
 

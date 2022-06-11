@@ -13,6 +13,11 @@ Pila::Pila()
 
 }
 
+char Pila::tope()
+{
+    return pila.top();
+}
+
 //UTILIZAR SU CLASE PILA
 void insertapila(string elem)//(char *elem) //(char elem[])
 {
