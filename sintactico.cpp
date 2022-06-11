@@ -127,16 +127,14 @@ Sintactico::Sintactico()
                     pila.push("F");
                 else
                     pila.push("D");
-
-                copy(x,pila.top().copy(x,0,sizeof (pila.top()-1)));
-
                 pila.top().copy(x, 0, sizeof(pila.top())-1);
-
             }
         }
-        else
+        else //SI NO ES TOKEN(TERMINAL)
         {
-            //renglon =
+
         }
-    }
+    }while(strcmp(x,"$")!= 0);
 }
+
+
