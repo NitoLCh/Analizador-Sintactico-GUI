@@ -1,10 +1,14 @@
 #include "analizadorlexico.h"
 //Commented by Water :3
 
+//Un constructor solito solitario..... o es un metodo vacio? ¯\_(ツ)_/¯
 AnalizadorLexico::AnalizadorLexico()
 {
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo scanner, recibe una cadena de la cual se analiza caracter por caracter
 void AnalizadorLexico::scanner(string cadena, string *resultado)
 {
     char caracter;  //Variable caracter donde se guarda el caracter que se lee
@@ -307,6 +311,7 @@ bool AnalizadorLexico::esReservada(string cadena)
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 //Metodo para analizar los tokens, recibe como parametro los tokens (PD: no entendi muy bien este metodo, sorry :p)
+//Si pudieras comentar tu este metodo pruneda te lo agradeceria mucho atte:Water <3
 void AnalizadorLexico::getTokens(string *STokens){
     for(int i = 0;i<this->i;i++ )
     {

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <algorithm>
 //Commented by Water :D
 using namespace std;
 
@@ -129,9 +130,11 @@ Sintactico::Sintactico()
                 pila.top().copy(x, 0, sizeof(pila.top())-1);
             }
         }
-        else
+        else //SI NO ES TOKEN(TERMINAL)
         {
-            //renglon =
+
         }
-    }
+    }while(strcmp(x,"$")!= 0);
 }
+
+
