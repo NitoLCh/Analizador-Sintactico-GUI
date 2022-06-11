@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string>
-
+#include <pila.h>
 using namespace std;
 
 class AnalizadorLexico
@@ -20,26 +20,26 @@ public:
     //palabras reservadas
     char palabras[3][6] = {"int", "char", "float"};
     char op[5] = {'+','-', '*', '/', '%'};
-    string Tokens[20];
+
+
+    Pila asTokens;
 
     void scanner(string cadena, string *resultado);
     void inicializaEstados();
     void fallo();
     char leerCar(string car);
     void retrocederCar();
+    string Reservada(string palabra);s
 
     bool estadoAceptacion();
     bool esDelimitador(char c);
     bool esLetra(char c);
     bool esDigito(char c);
-    bool esReservada(string palabra);
-<<<<<<< HEAD
+
 
 
     //Pruneda se te olvido definir getTokens aca xD
-=======
-    //Pruneda se te olvido definir getTokens aca xd
->>>>>>> ed193d0376293c061c4aec3da037f5e0038ba2be
+
     void getTokens(string *STokens);
 };
 
