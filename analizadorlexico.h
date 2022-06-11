@@ -29,16 +29,13 @@ public:
     void fallo();
     char leerCar(string car);
     void retrocederCar();
-
     bool esReservada(string palabra);
-    void operador(char c, string res);
-
 
     bool estadoAceptacion();
     bool esDelimitador(char c);
     bool esLetra(char c);
     bool esDigito(char c);
-
+    void operador(char, string)
     //Pruneda se te olvido definir getTokens aca xD
     void getTokens(string *STokens);
 };

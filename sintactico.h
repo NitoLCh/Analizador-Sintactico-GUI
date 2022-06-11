@@ -9,9 +9,9 @@ class Sintactico
 {
 public:
     Sintactico();
-    int buscaTabla(string a[], string x[]);
-    int estoken(char x[]);
-
+    int buscaTabla(string a, string x);
+    int estoken(string x);
+    void analizar();
 };
 
 #endif // SINTACTICO_H
