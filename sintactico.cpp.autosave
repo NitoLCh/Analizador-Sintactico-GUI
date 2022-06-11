@@ -113,6 +113,7 @@ Sintactico::Sintactico()
         /*x[1] = pila.top().
         strcpy(a, asTokens[ip]);*/
         strcpy(x,pila.top().c_str());
+        
 
         if(estoken(x) || (x.compare("$") == 0))
         {
