@@ -18,22 +18,25 @@ void Archivos::generarArchivo(fstream *Fd){
     char buffer[100]; // buffer array para guardar simplemente info
     string nombre;
 
-    //Se puede usar tambien puts("Nombre del Archivo a GENERAR (sin extension): "); pero puts ya esta fuera de onda y es de C
+    //Se puede usar tambien puts("Nombre del Archivo a GENERAR (sin extension): ");
     //usamos printf
     printf("Nombre del Archivo a GENERAR (sin extension): ");
     //gets(Nombre); //<--- ERROR CON ESTE METODO
     //usar gets ya no es recomendado ya que esta funcion no reconoce si quiera el tamaño de la cadena que se la va a pasar
     //gets solo lee los datos de entrada hasta el final, ocasionado problemas en caso de tener un array declarado con cierto tamaño
     //e ingresamos mas caracteres de los que se puede almacenar en dicho array.... esta fuera de onda igual que puts jejej
-
-    cin>>nombre; // Se usa un cinpara tomar y almacenar el nombre del archivo, sip, cin (ง •̀_•́)ง
+    cin>>nombre; // Se usa un cin para tomar y almacenar el nombre del archivo
 
     //La funcion sprintf la usamos para escribir en la salida que se genera
-    //En este caso al nombre del archivo se le concatena el tipo de formato que sera el archivo, el cual es .dat (espero no equivocarme, no me mates jorge D:)
+    //En este caso al nombre del archivo se le concatena el tipo de formato que sera el archivo, el cual es .dat
     sprintf(buffer,"%s.dat",nombre.c_str());
+    //la funcion open recibe como parametros el nombre del archivo con extension (en este caso nombre.dat) y recibe
+    //tambien las banderas del tipo modo de entrada/salida del archivo (in,out,binary,ate,app,trunc)
     Fd->open(nombre, fstream::binary|fstream::out|fstream::in|fstream::trunc);
+    //Si al abrir el archivo es nulo entonces entra en el if
     if(Fd == NULL){
         cout<<"NO SE PUEDE ABRIR EL ARCHIVO : "<<nombre;
+        //Imprime que no hay archivo para abrir y cierra el programa
         exit(-1);
     }
     puts("teclea el archivo : ");         
@@ -41,6 +44,7 @@ void Archivos::generarArchivo(fstream *Fd){
 
     //LA INFO ESTA EN EL BUFFERs
     do{
+        //cin.get toma lo que se escribe y lo guarda en la variable caracter
         caracter = cin.get();
         //cin>>car;
         if(caracter == '\n'){
@@ -49,48 +53,60 @@ void Archivos::generarArchivo(fstream *Fd){
         }
         if(caracter == 0)  //NULL
             caracter = cin.get();
+        //Se pide que caracter sea diferente de "@", de esta manera
         if(caracter != '@')        //27 && car != 8)
+            //escribe todo lo que guardo en buffer y lo guarda
             Fd->write(&caracter,sizeof(caracter));
-
+    //El ciclo se mantiene mientas caracter sea diferente de "@"
     }while(caracter != '@');
-
+    //Se cierra el identificador del archivo
     Fd->close();
 
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para abrir archivo
 void Archivos::abrirArchivo(fstream *Fd)
 {
-    char buffer[100];
+    char buffer[100];   // buffer array para guardar simplemente info
     //char nombre[100];
     string nombre = "";
 
+    //Se pregunta el nombre del archivo a abrir, luego se toma y guarda el nombre el la variable nombre
     printf("\n\n Nombre del Archivo a ABRIR(sin extension): ");
-        //gets(nombre);
     cin>>nombre;
     //cin.get();  //ELIMINAR EL ENTER
     //cin.getline(nombre,100,'\n');
 
-
+    //La funcion sprintf la usamos para escribir en la salida que se genera
+    //En este caso al nombre del archivo se le concatena el tipo de formato que sera el archivo, el cual es .dat
     sprintf(buffer,"%s.dat", nombre.c_str());  //,'\0');
+    //se vuelve a usar la funcion open con el identificador Fd
     Fd->open(nombre, fstream::binary|fstream::out|fstream::in|fstream::trunc);
 
+    //Si al abrir el archivo es nulo entonces entra en el if
     if(Fd==NULL){
         printf("NO SE PUEDE ABRIR EL ARCHIVO");
-        exit(-1);    //cin.get();
-
+        //Imprime que no hay archivo para abrir y cierra el programa
+        exit(-1);
     }
     else{
         printf("EL ARCHIVO SE ENCUENTRA ABIERTO \n");
-
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo que retorna el tamaño en bytes del archivo
 int Archivos::bytesArchivo(fstream *Fd){
-    //variable aux donde se guardara y retornara el tamaño en bytes
-    int aux;
+    int aux;    //variable aux donde se guardara y retornara el tamaño en bytes
     //fseek(Fd,0L,SEEK_END);
+    //funcion seekg sirve para movernos a una posicion que usaremos (toma como parametros la cantidad de espacios a saltar
+    //y desde que punto)
     Fd->seekg(1, std::ios::end);
     //aux = (int) ftell(Fd);
+    //con tellg() se ve la posicion para ver cual es su tamaño y lo guardamos en la variable aux
     aux = Fd->tellg();
     //fseek(Fd,0L,SEEK_SET);
     Fd->seekg(1,std::ios::beg);
