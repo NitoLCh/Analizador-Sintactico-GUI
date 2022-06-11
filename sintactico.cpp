@@ -111,26 +111,27 @@ Sintactico::Sintactico()
         /*x[1] = pila.top().
         strcpy(a, asTokens[ip]);*/
         strcpy(x,pila.top().c_str());
+        strcpy(a,asTokens[ip].c_str());
 
-        if(estoken(x) || (x.compare("$") == 0))
+        if(estoken(x) || (strcmp(x, "$") == 0))
         {
-            if(x->compare(a) == 0)
+            if(strcmp(x, a) == 0)
             {
                 pila.pop();
                 ip++;
             }
             else
             {
-                if(asTokens[ip]->compare("puts") == 0)
+                if(asTokens[ip].compare("puts") == 0)
                     pila.push("F");
                 else
                     pila.push("D");
-                copy(x,  pila.top());
+                pila.top().copy(x, 0, sizeof(pila.top())-1);
             }
         }
         else
         {
-            renglon =
+            //renglon =
         }
     }
 }
