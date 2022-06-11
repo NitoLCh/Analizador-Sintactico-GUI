@@ -29,7 +29,8 @@ public:
     void fallo();
     char leerCar(string car);
     void retrocederCar();
-    string Reservada(string palabra);s
+    bool esReservada(string palabra);
+    void operador(char c, string res);
 
     bool estadoAceptacion();
     bool esDelimitador(char c);

@@ -3,7 +3,7 @@
 
 #include "pila.h"
 
-
+Pila asTokens;
 //Un constructor solito solitario..... o es un metodo vacio? ¯\_(ツ)_/¯
 AnalizadorLexico::AnalizadorLexico()
 {
@@ -78,8 +78,8 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 if(esReservada(reservada)) //si es reservada entra al if, de lo contrario va al else
                 {
                     //en la variable resultado se guarda y concatena "palabra reservada" y un salto de linea
-                    *resultado += "PALABRA RESERVADA\n";
-
+                    *resultado += reservada;
+                     asTokens.insertapila(reservada);
                                       //se inicializan los estados
                     inicializaEstados();
                     //y establecemos iniciotoken en la posicion i
@@ -87,6 +87,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 } else {
                     //en la variable resultado se guarda y concatena "identificador" y un salto de linea
                     *resultado += "IDENTIFICADOR\n";
+                    asTokens.insertapila("ID");
                     //se inicializan los estados
                     inicializaEstados();
                     //y establecemos iniciotoken en la posicion i
@@ -115,6 +116,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
         case 8: retrocederCar();
                 //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                 *resultado += "NUMERO ENTERO\n";
+                 asTokens.insertapila("NUM");
                 //se inicializan los estados
                 inicializaEstados();
                 //y se establece iniciotoken en la posicion i
@@ -133,13 +135,18 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 *resultado += "NUMERO REAL\n";
                 //se inicializan los estados
                 inicializaEstados();
+                asTokens.insertapila("NUM");
                 //y se establece iniciotoken en la posicion i
                 inicioToken = i;
         break;
         case 11: caracter = leerCar(cadena);
                 //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
                  if(caracter == '=')
+                 {
                      estadoActual = 12;
+                     *resultado+="= \n";
+                     asTokens.insertapila("=");
+                 }
                  else
                      fallo();
         break;
@@ -152,6 +159,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
         case 13: retrocederCar();
                 //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
                  *resultado += "OPERADOR DE ASIGNACION\n";
+
                 //se inicializan los estados
                  inicializaEstados();
                  //y se establece iniciotoken en la posicion i
@@ -167,12 +175,15 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
         break;
                  //se vuelve a leer el caracter, y va al estado 16..... no se porque esta un caso de mas, pero bueno va al caso siguiente
         case 15: caracter = leerCar(cadena);
+
                  estadoActual = 16;
         break;
                  //se llama a retrocederCar();
         case 16: retrocederCar();
                 //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                 operador(caracter,*resultado);
                  *resultado += "OPERADOR ARITMETICO\n";
+                 operador(caracter,*resultado);operador(caracter,*resultado);
                 //se inicializan los estados
                  inicializaEstados();
                  //y se establece iniciotoken en la posicion i
@@ -194,6 +205,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                              *resultado += "PARANTESIS I\n";
                             //se inicializan los estados
                              inicializaEstados();
+                             asTokens.insertapila("(");
                              //y se establece iniciotoken en la posicion i
                              inicioToken = i;
         case 19:
@@ -211,30 +223,90 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                              *resultado += "PARANTESIS D\n";
                             //se inicializan los estados
                              inicializaEstados();
+
+                             asTokens.insertapila("(");
                              //y se establece iniciotoken en la posicion i
                              inicioToken = i;
 
         case 21:
         //{
+            caracter = leerCar(cadena);
+           //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+            if(caracter =='{')
+                estadoActual = 22;
+            else
+                fallo();
         case 22:
         //final {
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "LLAVE I\n";
+                            //se inicializan los estados
+                             inicializaEstados();
+
+                             asTokens.insertapila("{");
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
         case 23:
         //}
+            caracter = leerCar(cadena);
+           //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+            if(caracter =='}')
+                estadoActual = 24;
+            else
+                fallo();
         case 24:
         //final  }
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "LLAVE D\n";
+                            //se inicializan los estados
+                             inicializaEstados();
 
+                             asTokens.insertapila("}");
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
         case 25:
         //[
+            caracter = leerCar(cadena);
+           //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+            if(caracter =='[')
+                estadoActual = 26;
+            else
+                fallo();
         case 26:
         //final [
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "CORCHETE I \n";
+                            //se inicializan los estados
+                             inicializaEstados();
+
+                             asTokens.insertapila("[");
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
         case 27:
-        //[
+        //]
+                caracter = leerCar(cadena);
+               //si caracter es igual a "=" entonces pasa al estado 12, de lo contrario pasa a fallo()
+                if(caracter ==']')
+                    estadoActual = 28;
+                else
+                    fallo();
         case 28:
         //final ]
+            retrocederCar();
+                            //en la variable resultado se guarda y concatena "numero entero" y un salto de linea
+                             *resultado += "CORCHETE D \n";
+                            //se inicializan los estados
+                             inicializaEstados();
 
+                             asTokens.insertapila("]");
+                             //y se establece iniciotoken en la posicion i
+                             inicioToken = i;
         //------------------------------- Fin de los casos -----------------------------------//
 
-        case 25:
+        case 29:
             //Aqui se comprueba si caracter es ";", con esto podemos verificar si ya termino la sentencia
             if(caracter==';')
             {
@@ -242,8 +314,9 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 *resultado += "$ FIN\n";
                 //se incrementa i para salir del while
                 i++;
+                asTokens.insertapila("$");
                 //y establecemos estadoActual = 19, igual para no mantener el while
-                estadoActual=19;
+                estadoActual=30;
             }
             break;
         }
@@ -352,7 +425,7 @@ bool AnalizadorLexico::esDigito(char c)
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 //Metodo para analizar si es palabra reservada o no el caracter que se recibe
-string AnalizadorLexico::Reservada(string cadena)
+bool AnalizadorLexico::esReservada(string cadena)
 {
     string res;
     int i = 0; //Variable int donde se inicializa en 0
@@ -360,17 +433,46 @@ string AnalizadorLexico::Reservada(string cadena)
     while(i <= (int)sizeof(palabras)){
         //si la la cadena que recibe coincide con la posicion de la palabra entonces entra en el if
         if(cadena == palabras[i]){
-            return (res=palabras[i]);
+            return true;
         }
         //Luego se incrementa i para movernos en el array palabras
          i++;
         }
-    return res;
+    return false;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------//
+void operador(char car,string res)
+{
+  switch(car)
+  {
+  case '+':
+      asTokens.insertapila("+");
+      res+="+ \n";
+      break;
+  case '-':
+      asTokens.insertapila("-");
+      res+="- \n";
+      break;
+
+  case '/':
+      asTokens.insertapila("/");
+      res+="/ \n";
+      break;
+
+  case '*':
+      asTokens.insertapila("*");
+      res+="* \n";
+      break;
+
+  case '%':
+      asTokens.insertapila("%");
+      res+="% \n";
+      break;
 
 
+  }
+}
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 //Metodo para analizar los tokens, recibe como parametro los tokens (PD: no entendi muy bien este metodo, sorry :p)
