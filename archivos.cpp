@@ -5,109 +5,82 @@
 #include "stdio.h"
 using namespace std;
 
-Archivos::Archivos()
-{
+Archivos::Archivos(){
 
 }
 
-<<<<<<< HEAD
-void Archivos::generarArchivo(FILE *Fd)
-{
-    char car;
-    char nomArch[100];
-
-    // char *nombre = new char[100];
-    //cin.getline(nombre,100,'\n');
+void Archivos::generarArchivo(fstream *Fd){
+    char caracter;
+    char buffer[100];
 
     string nombre;
     printf("Nombre del Archivo a GENERAR (sin extension): ");
                     //gets(Nombre);  //<--- ERROR CON ESTE METODO
     cin>>nombre;
 
-          // cin.get();    //ELIMINAR ENTER
-
-
-    sprintf(nomArch,"%s.dat",nombre.c_str());
-    Fd = fopen(nomArch,"w+b");
-    if(Fd == NULL)
-    {
-        cout<<"NO SE PUEDE ABRIR EL ARCHIVO : "<<nomArch;
+    sprintf(buffer,"%s.dat",nombre.c_str());
+    Fd->open(nombre, fstream::binary|fstream::out|fstream::in|fstream::trunc);
+    if(Fd == NULL){
+        cout<<"NO SE PUEDE ABRIR EL ARCHIVO : "<<nombre;
         exit(-1);
     }
-    puts("teclea el archivo : ");
-            //cin.get();  //eliminar el enter
-   // printf("Tecela <ESC> -USAR UNICODE DEL ESC -para terminar el archivo \n");
-
+    puts("teclea el archivo : ");         
     printf("Tecela @ para terminar el archivo \n");
 
     //LA INFO ESTA EN EL BUFFERs
-    do
-    {
-        car = cin.get();
+    do{
+        caracter = cin.get();
         //cin>>car;
-        if( car == '\n')  //13)
-        {
-            car = '\n';
+        if(caracter == '\n'){
+            caracter = '\n';
             printf("\n");
         }
-        if(car == 0)  //NULL
-            car = cin.get();
-        if(car != '@')        //27 && car != 8)
-            fwrite(&car,sizeof(car),1,Fd);
+        if(caracter == 0)  //NULL
+            caracter = cin.get();
+        if(caracter != '@')        //27 && car != 8)
+            Fd->write(&caracter,sizeof(caracter));
 
-    }while(car != '@');
+    }while(caracter != '@');
 
-    fclose(Fd);
+    Fd->close();
 
 }
 
-void Archivos::abrirArchivo(FILE *Fd)
+void Archivos::abrirArchivo(fstream *Fd)
 {
-    char nomArch[100];
+    char buffer[100];
     //char nombre[100];
-    char *nombre = new char[100];
+    string nombre = "";
 
     printf("\n\n Nombre del Archivo a ABRIR(sin extension): ");
         //gets(nombre);
-    //cin>>nombre;
-    cin.get();  //ELIMINAR EL ENTER
-    cin.getline(nombre,100,'\n');
-
-    //sprintf(nomArch,"/Users/martinos/Desktop/appASintactico_XCode/%s.dat",nombre);  //,'\0');
-    sprintf(nomArch,"%s.dat",nombre);  //,'\0');
+    cin>>nombre;
+    //cin.get();  //ELIMINAR EL ENTER
+    //cin.getline(nombre,100,'\n');
 
 
-    Fd = fopen(nomArch,"r+b");
+    sprintf(buffer,"%s.dat", nombre.c_str());  //,'\0');
+    Fd->open(nombre, fstream::binary|fstream::out|fstream::in|fstream::trunc);
 
-    if(Fd==NULL)
-    {
+    if(Fd==NULL){
         printf("NO SE PUEDE ABRIR EL ARCHIVO");
         exit(-1);    //cin.get();
 
     }
-    else
-    {
+    else{
         printf("EL ARCHIVO SE ENCUENTRA ABIERTO \n");
 
     }
-=======
-
-void Archivos::generararch(FILE *Fd){
-
 }
 
-void Archivos::vabrirarch(FILE *Fd){
-
-
->>>>>>> cambios de la clase archivo
-}
-
-int Archivos::byteArchivo(FILE *Fd)
-{
+int Archivos::bytesArchivo(fstream *Fd){
     int aux;
-    fseek(Fd,0L,SEEK_END);
-    aux = (int) ftell(Fd);
-    fseek(Fd,0L,SEEK_SET);
+    //fseek(Fd,0L,SEEK_END);
+    Fd->seekg(1, std::ios::end);
+    //aux = (int) ftell(Fd);
+    aux = Fd->tellg();
+    //fseek(Fd,0L,SEEK_SET);
+    Fd->seekg(1,std::ios::beg);
     return aux;
 }
 

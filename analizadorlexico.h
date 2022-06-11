@@ -33,7 +33,9 @@ public:
     bool esDigito(char c);
     bool esReservada(string palabra);
 
-    void getTokens(string *);
+
+    //Pruneda se te olvido definir getTokens aca xD
+    void getTokens(string *STokens);
 };
 
 #endif // ANALIZADORLEXICO_H

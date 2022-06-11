@@ -11,6 +11,7 @@ public:
     Sintactico();
     int buscaTabla(string a[], string x[]);
     int estoken(char x[]);
+
 };
 
 #endif // SINTACTICO_H
