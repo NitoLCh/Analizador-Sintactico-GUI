@@ -24,8 +24,8 @@ HEADERS += \
     dialog.h \
     pila.h \
     sintactico.h
-    #aplica igual aca, solo el ultimo no termina con "\"
 
+    #aplica igual aca, solo el ultimo no termina con "\"
 FORMS += \
     dialog.ui
 
