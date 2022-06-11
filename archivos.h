@@ -3,14 +3,16 @@
 
 #include <iostream>
 #include <fstream>
+#include <QtGui>
+using namespace std;
 
 class Archivos
 {
 public:
     Archivos();
-        void generarArchivo(FILE *Fd);
-        void abrirArchivo(FILE *Fd);
-        int bytesArchivo(FILE *Fd);
+        void generarArchivo(fstream *Fd);
+        void abrirArchivo(fstream *Fd);
+        int bytesArchivo(fstream *Fd);
 };
 
 #endif // ARCHIVOS_H

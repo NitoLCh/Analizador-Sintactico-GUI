@@ -13,7 +13,7 @@ SOURCES += \
     archivos.cpp \
     main.cpp \
     dialog.cpp \
-    sintactico.cpp \
+    sintactico.cpp
 
 HEADERS += \
     analizadorlexico.h \
@@ -22,7 +22,7 @@ HEADERS += \
     sintactico.h
 
 FORMS += \
-    dialog.ui \
+    dialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

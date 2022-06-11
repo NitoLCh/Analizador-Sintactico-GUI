@@ -28,7 +28,6 @@
    <property name="font">
     <font>
      <pointsize>10</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -91,15 +90,14 @@ color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>9</x>
      <y>300</y>
-     <width>80</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -125,7 +123,6 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="font">
     <font>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -211,7 +208,6 @@ background-color: rgb(51, 0, 76);</string>
    </property>
    <property name="font">
     <font>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -229,15 +225,14 @@ color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>99</x>
+     <x>110</x>
      <y>300</y>
-     <width>101</width>
+     <width>111</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
