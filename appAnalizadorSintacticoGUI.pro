@@ -13,14 +13,14 @@ SOURCES += \
     archivos.cpp \
     main.cpp \
     dialog.cpp \
-    sintactico.cpp
-
+    pila.cpp \
+    sintactico.cpp \
 HEADERS += \
     analizadorlexico.h \
     archivos.h \
     dialog.h \
+    pila.h \
     sintactico.h
-
 FORMS += \
     dialog.ui
 
