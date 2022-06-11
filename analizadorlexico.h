@@ -17,6 +17,7 @@ public:
     int i, inicioToken, estadoInicial, estadoActual;
     string reservada = "";
 
+    //palabras reservadas
     char palabras[3][6] = {"int", "char", "float"};
 
     void scanner(string cadena, string *resultado);
@@ -30,7 +31,7 @@ public:
     bool esLetra(char c);
     bool esDigito(char c);
     bool esReservada(string palabra);
-    //Pruneda se te olvido definir getTokens aca xD
+    //Pruneda se te olvido definir getTokens aca xd
     void getTokens(string *STokens);
 };
 
