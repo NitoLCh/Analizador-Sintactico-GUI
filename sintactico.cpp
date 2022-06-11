@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <algorithm>
 //Commented by Water :D
 using namespace std;
 
@@ -125,7 +126,7 @@ Sintactico::Sintactico()
                     pila.push("F");
                 else
                     pila.push("D");
-                copy(x,  pila.top());
+                copy(x,pila.top().copy(x,0,sizeof (pila.top()-1)));
             }
         }
         else
