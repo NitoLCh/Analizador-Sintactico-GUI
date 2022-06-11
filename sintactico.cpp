@@ -6,6 +6,7 @@
 #include <string.h>
 #include <iostream>
 #include <algorithm>
+#include "pila.h"
 //Commented by Water :D
 using namespace std;
 
@@ -24,15 +25,15 @@ string par[6] = {"2","4","6","8","0"};
 int estoken(char x[]);
 
 string asTokens [MAXTOKEN];
-stack<string> pila;
+Pila pila;
 
 //Matriz para los tokens
 //                          1   2   3   4    5   6    7     8      9     10      11    12  13     14     15  16  17  18  19
-string token[20][8] = {"x",";",",","*","Id","[","]","Num","char","int","float","puts","(",")","Cte.Lit","=","+","$","{","}"};
+string token[20] = {"x",";",",","*","Id","[","]","Num","char","int","float","puts","(",")","Cte.Lit","=","+","$","{","}"};
 
 //Matriz para los terminales
 //                             1   2   3   4    5    6   7    8   9   10  11  12
-string terminal[13][3] = {"x","D","L","L'","I","I'","A","A'","K","T","F","E","P"};
+string terminal[13] = {"x","D","L","L'","I","I'","A","A'","K","T","F","E","P"};
 
 int tablaM[32][8] = {
 //                      fila, columna, terminal -> terminal|token|λ, terminal|token|λ, terminal|token|λ, terminal|token|λ, terminal|token|λ
@@ -89,13 +90,13 @@ Sintactico::Sintactico()
     int ip =  0, i, j;
     int renglon, iast;
     char x[10], a[10];
-    pila.push("$"); //InsertarPila
+    pila.insertapila("$"); //InsertarPila
 
     //if(strcmp(asTokens[ip],"puts")== 0)
     if(asTokens[ip].compare("puts") == 0)
-        pila.push("F");
+        pila.insertapila("F");
     else
-        pila.push("D");
+        pila.insertapila("D");
 
     //Salidas a pantalla
      printf("\nSalida del Analizador Sintactico (asTokens) \n\n");
@@ -111,14 +112,14 @@ Sintactico::Sintactico()
         //copy(pila.top(), x, pila.top());
         /*x[1] = pila.top().
         strcpy(a, asTokens[ip]);*/
-        strcpy(x,pila.top().c_str());
+        strcpy(x,pila.tope().c_str());
         strcpy(a,asTokens[ip].c_str());
 
         if(estoken(x) || (strcmp(x, "$") == 0))
         {
             if(strcmp(x, a) == 0)
             {
-                pila.pop();
+                pila.eliminapila();
                 ip++;
             }
             else
@@ -136,5 +137,37 @@ Sintactico::Sintactico()
         }
     }while(strcmp(x,"$")!= 0);
 }
+
+int Sintactico::buscaTabla(string a[], string x[])
+{
+    int indx = 0;
+    int inda = 0, i;
+    for (i = 0; i < 15; i++)
+        if()
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
