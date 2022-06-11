@@ -18,6 +18,8 @@ public:
     string reservada = "";
 
     char palabras[3][6] = {"int", "char", "float"};
+    char op[5] = {'+','-', '*', '/', '%'};
+    string Tokens[20];
 
     void scanner(string cadena, string *resultado);
     void inicializaEstados();
@@ -30,6 +32,8 @@ public:
     bool esLetra(char c);
     bool esDigito(char c);
     bool esReservada(string palabra);
+
+    void getTokens(string *);
 };
 
 #endif // ANALIZADORLEXICO_H
