@@ -31,7 +31,7 @@ public:
     bool esLetra(char c);
     bool esDigito(char c);
     bool esReservada(string palabra);
-    //Pruneda se te olvido definir getTokens aca xd
+    //Pruneda se te olvido definir getTokens aca
     void getTokens(string *STokens);
 };
 
