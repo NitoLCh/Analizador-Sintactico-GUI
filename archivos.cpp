@@ -6,10 +6,8 @@
 //Commented by Water :p
 using namespace std;
 
-//Otro constructor vacio...
 Archivos::Archivos(){
-    //Mis esperanzas de pasar con claudia estan aqui...
-    //Asi es, no hay nada, no hay esperanzas :c
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------//
@@ -21,14 +19,14 @@ void Archivos::generarArchivo(fstream *Fd){
     string nombre;
 
     //Se puede usar tambien puts("Nombre del Archivo a GENERAR (sin extension): "); pero puts ya esta fuera de onda y es de C
-    //printf mola mas c:
+    //usamos printf
     printf("Nombre del Archivo a GENERAR (sin extension): ");
     //gets(Nombre); //<--- ERROR CON ESTE METODO
     //usar gets ya no es recomendado ya que esta funcion no reconoce si quiera el tamaño de la cadena que se la va a pasar
     //gets solo lee los datos de entrada hasta el final, ocasionado problemas en caso de tener un array declarado con cierto tamaño
     //e ingresamos mas caracteres de los que se puede almacenar en dicho array.... esta fuera de onda igual que puts jejej
 
-    cin>>nombre; // Se usa un cinpara tomar y almacenar el nombre del archivo, sip, cin (o scanf) mola mas que gets (ง •̀_•́)ง
+    cin>>nombre; // Se usa un cinpara tomar y almacenar el nombre del archivo, sip, cin (ง •̀_•́)ง
 
     //La funcion sprintf la usamos para escribir en la salida que se genera
     //En este caso al nombre del archivo se le concatena el tipo de formato que sera el archivo, el cual es .dat (espero no equivocarme, no me mates jorge D:)

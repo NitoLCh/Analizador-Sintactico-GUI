@@ -14,10 +14,18 @@ SOURCES += \
     main.cpp \
     dialog.cpp \
     pila.cpp \
+#<<<<<<< Updated upstream
     sintactico.cpp #Aqui termina la carpeta sources
     #PD: No es necesario poner el "\" en el ultimo archivo de sources y headers, de esta forma se separan por carpetas...
     #bueno al menos en mi caso
 
+#=======
+
+#<<<<<<< HEAD
+#=======
+
+#>>>>>>> f1d1d2f5047b714c642fbc238b252afff4b6f748
+#>>>>>>> Stashed changes
 HEADERS += \
     analizadorlexico.h \
     archivos.h \
