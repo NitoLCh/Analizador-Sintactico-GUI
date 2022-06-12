@@ -9,10 +9,12 @@ using namespace std;
 class Archivos
 {
 public:
+    fstream Fd;
     Archivos();
-        void generarArchivo(fstream *Fd);
-        void abrirArchivo(fstream *Fd);
-        int bytesArchivo(fstream *Fd);
+        void generarArchivo();
+        void abrirArchivo();
+        int bytesArchivo();
+        void cerrarArchivo();
 };
 
 #endif // ARCHIVOS_H

@@ -6,7 +6,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string>
-#include <pila.h>
+#include "pila.h"
+
 using namespace std;
 
 class AnalizadorLexico
@@ -15,7 +16,8 @@ public:
     AnalizadorLexico();
 
     int i, inicioToken, estadoInicial, estadoActual;
-    string reservada = "";
+    string* resultado;
+    string cadena;
 
     //palabras reservadas
     //Sabemos que declarar estas variables aqui no es lo ideal, porque consumimos memoria
@@ -24,9 +26,8 @@ public:
     char op[5] = {'+','-', '*', '/', '%'};
 
 
-    Pila asTokens;
 
-    void scanner(string cadena, string *resultado);
+    Pila scanner();
     void inicializaEstados();
     void fallo();
     char leerCar(string car);
@@ -38,8 +39,14 @@ public:
     bool esLetra(char c);
     bool esDigito(char c);
     void operador(char, string);
-    //Pruneda se te olvido definir getTokens aca xD
-    void getTokens(string *STokens);
+
+    void setCadena(string cadena);
+    string getCadena();
+    void setResultado(string *resultado);
+    string* getResultado();
+
+    void mostrar();
+
 };
 
 #endif // ANALIZADORLEXICO_H

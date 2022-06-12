@@ -7,13 +7,13 @@
 #include <iostream>
 #include <algorithm>
 #include "pila.h"
+#include "analizadorlexico.h"
 //Commented by Water :D
 using namespace std;
 
 //----------------------------------------- NOSOTROS SOMOS MODULO SINTACTICO ----------------------------------------------------//
-#define MAXTOKEN 20
 #define NUMPALRES 4
-#define MAX 50 // este se elimina porque no lo usamos en nuestra modificacion porque dejamos de usar la pila
+AnalizadorLexico anlex;
 
 string PalRes[5] = {"char", "float", "int", "puts"};
 //string sLexema[127];
@@ -22,7 +22,9 @@ string non[6] = {"1","3","5","7","9"};//
 string par[6] = {"2","4","6","8","0"};//
 
 // QUITAMOS LOS METODOS DE ARCHIVOS Y LEXICOS
-string asTokens [MAXTOKEN];
+//string asTokens [MAXTOKEN];
+Pila copiaAsTokens = anlex.scanner();
+
 Pila pila;//Como tenemos una clase dinamica la estatica se desecha
 
 //Matriz para los tokens
@@ -107,6 +109,18 @@ int Sintactico::buscaTabla(string a, string x){
 
 }
 
+int Sintactico::estoken(string x){
+    int i;
+
+    for(i=0; i<23; i++)
+    {
+        if(x.compare(token[i]) == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
 void Sintactico::analizar(){
     int ip=0, i, j;   //IP = 0   i y j no inicializan
     int renglon, iast;
@@ -114,7 +128,7 @@ void Sintactico::analizar(){
     pila.insertapila("$"); //InsertarPila
 
     //if(strcmp(asTokens[ip],"puts")== 0)
-    if(asTokens[ip].compare("puts") == 0)
+    if(copiaAsTokens.tope().compare("puts") == 0)
         pila.insertapila("F");// primera gramatica e inicia con F
     else
         pila.insertapila("D");// segunda gramatica e inicia con D
@@ -123,8 +137,8 @@ void Sintactico::analizar(){
      printf("\nSalida del Analizador Sintactico (asTokens) \n\n");
      printf("Arreglo de Tokenss: \n\n");
 
-    for(i = 0; asTokens[i].compare("$") != 0; i++)
-        printf("%s ", asTokens[i].c_str());
+    for(i = 0; copiaAsTokens.tope().compare("$") != 0; i++)
+        printf("%s ", copiaAsTokens.tope().c_str());
 
     printf("\n\n Producciones: \n\n");
     //buscar tokens residuales como el ;
@@ -145,7 +159,7 @@ void Sintactico::analizar(){
                 ip++;
             }
             else{
-                if(asTokens[ip].compare("puts") == 0)
+                if(copiaAsTokens.tope().compare("puts") == 0)
                     pila.insertapila("F");
                 else
                     pila.insertapila("D");

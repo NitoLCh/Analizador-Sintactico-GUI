@@ -1,9 +1,7 @@
 #include "analizadorlexico.h"
 //Commented by Water :3
-
-#include "pila.h"
-
 Pila asTokens;
+string reservada="";
 //Un constructor solito solitario..... o es un metodo vacio? ¯\_(ツ)_/¯
 AnalizadorLexico::AnalizadorLexico()
 {
@@ -12,8 +10,11 @@ AnalizadorLexico::AnalizadorLexico()
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 //Metodo scanner, recibe una cadena de la cual se analiza caracter por caracter
-void AnalizadorLexico::scanner(string cadena, string *resultado)
+Pila AnalizadorLexico::scanner()
 {
+    string cadena="";
+    string *resultado;
+
     char caracter;  //Variable caracter donde se guarda el caracter que se lee
     inicializaEstados();    //se inicializan los estados a 0
     i = inicioToken = 0;    // iniciotoken e i se inicializan en 0
@@ -321,6 +322,11 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
             break;
         }
     }
+
+    setResultado(resultado);
+    setCadena(cadena);
+
+    return asTokens;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------//
@@ -453,7 +459,7 @@ bool AnalizadorLexico::esReservada(string cadena)
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------//
-void operador(char car,string res)
+void AnalizadorLexico::operador(char car,string res)
 {
   switch(car)
   {
@@ -484,14 +490,35 @@ void operador(char car,string res)
 
   }
 }
-//-------------------------------------------------------------------------------------------------------------------------------//
 
-//Metodo para analizar los tokens, recibe como parametro los tokens (PD: no entendi muy bien este metodo, sorry :p)
-//Si pudieras comentar tu este metodo pruneda te lo agradeceria mucho atte:Water <3
-void AnalizadorLexico::getTokens(string *STokens){
-    for(int i = 0;i<this->i;i++ )
-    {
-        STokens[i]=STokens[i];
-    }
-
+void AnalizadorLexico::setCadena(string cadena){
+    this->cadena = cadena;
 }
+
+string AnalizadorLexico::getCadena(){
+    return this->cadena;
+}
+
+void AnalizadorLexico::setResultado(string *resultado){
+    this->resultado = resultado;
+}
+
+string *AnalizadorLexico::getResultado(){
+    return this->resultado;
+}
+
+void AnalizadorLexico::mostrar(){
+    puts("\nTOKENS RECONOCIDOS : \n");
+    Pila copia = scanner();
+
+    while(!copia.stck->empty())  //,Ren++)
+    {
+        puts(copia.tope().c_str());
+        puts("\n");
+        copia.eliminapila();
+    }
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------//
