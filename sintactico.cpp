@@ -1,9 +1,9 @@
 #include "sintactico.h"
 #include <string>
+#include <string.h>
 #include <stack>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <iostream>
 #include <algorithm>
 #include "pila.h"
@@ -15,20 +15,18 @@ using namespace std;
 #define NUMPALRES 4
 #define MAX 50
 
-string PalRes[5][10] = {"char", "float", "int", "puts"};
+string PalRes[5] = {"char", "float", "int", "puts"};
 string sLexema[127];
 string sLinea[127];
 string non[6] = {"1","3","5","7","9"};
 string par[6] = {"2","4","6","8","0"};
 
 // QUITAMOS LOS METODOS DE ARCHIVOS Y LEXICOS
-int estoken(char x[]);
-
 string asTokens [MAXTOKEN];
 Pila pila;
 
 //Matriz para los tokens
-//                          1   2   3   4    5   6    7     8      9     10      11    12  13     14     15  16  17  18  19
+//                       1   2   3   4    5   6    7     8      9     10      11    12  13     14    15   16  17  18  19
 string token[20] = {"x",";",",","*","Id","[","]","Num","char","int","float","puts","(",")","Cte.Lit","=","+","$","{","}"};
 
 //Matriz para los terminales
@@ -59,10 +57,10 @@ int tablaM[32][8] = {
                         {5, 4, 5, -4, 999, 999, 999, 999},      // I', Id PRODUCE -> I' -> Id       AGREGADA
                         {5, 5, 5, 6, 999, 999, 999, 999},       // I', [ PRODUCE -> I' -> A
                         {5, 15, 5, -15, 5, 999, 999, 999},      // I', = PRODUCE -> I' -> =I'       AGREGADA
-                        //{5, 16, 5, 999, 999, 999, 999, 999},    // I', + PRODUCE -> I' -> λ       AGREGADA
-                        //{5, 17, 5, 999, 999, 999, 999, 999},    // I', $ PRODUCE -> I' -> λ       AGREGADA
-                        //{5, 18, 5, 999, 999, 999, 999, 999},    // I', { PRODUCE -> I' -> λ       AGREGADA
-                        //{5, 19, 5, 999, 999, 999, 999, 999},    // I', } PRODUCE -> I' -> λ       AGREGADA
+                        //{5, 16, 5, 999, 999, 999, 999, 999},    // I', + PRODUCE -> I' -> λ       ELIMINADA
+                        //{5, 17, 5, 999, 999, 999, 999, 999},    // I', $ PRODUCE -> I' -> λ       ELIMINADA
+                        //{5, 18, 5, 999, 999, 999, 999, 999},    // I', { PRODUCE -> I' -> λ       ELIMINADA
+                        //{5, 19, 5, 999, 999, 999, 999, 999},    // I', } PRODUCE -> I' -> λ       ELIMINADA
                         //-----------------------------------------------------------------------------//
                         {6, 5, 6, -5, 8,-6, 7, 999},            // A, [ PRODUCE -> A -> [K]A'
                         //-----------------------------------------------------------------------------//
@@ -87,12 +85,32 @@ int tablaM[32][8] = {
 };
 
 // USAR DE PARAMETRO UN OBJETO SOBRE EL CUAL ESCRIBIR
-Sintactico::Sintactico()
-{
+Sintactico::Sintactico(){
+}
 
-    int ip =  0, i, j;
+int Sintactico::buscaTabla(string a, string x){
+    int indx=0, inda=0, i;
+    for(i = 0; i < 15; i++)
+        if(a.compare(token[i])==0)
+            inda = i;     //break;
+    for(i = 0; i < 13; i++)
+        if(x.compare(terminal[i])==0)
+            indx=i;
+    for(i = 0; i < 25; i++)
+    {
+        if(indx == tablaM[i][0])
+            if(inda == tablaM[i][1])
+                return i;
+    }
+    return 999;
+
+
+}
+
+void Sintactico::analizar(){
+    int ip=0, i, j;   //IP = 0   i y j no inicializan
     int renglon, iast;
-    char x[10], a[10];
+    string x, a; //cambio de arreglo de char a string
     pila.insertapila("$"); //InsertarPila
 
     //if(strcmp(asTokens[ip],"puts")== 0)
@@ -115,39 +133,61 @@ Sintactico::Sintactico()
         //copy(pila.top(), x, pila.top());
         /*x[1] = pila.top().
         strcpy(a, asTokens[ip]);*/
-        strcpy(x,pila.tope().c_str());
-        strcpy(a,asTokens[ip].c_str());
+        //strcpy(&x, pila.tope());
+        //strcpy(&a, asTokens[ip].c_str());
+        x = pila.tope();
 
-        if(estoken(x) || (strcmp(x, "$") == 0))
+        if(estoken(x) || (x.compare("$") == 0))
         {
-            if(strcmp(x, a) == 0)
+            if(x.compare(a) == 0)
             {
                 pila.eliminapila();
                 ip++;
             }
-            else
-            {
+            else{
                 if(asTokens[ip].compare("puts") == 0)
-                    pila.push("F");
+                    pila.insertapila("F");
                 else
-                    pila.push("D");
-                pila.top().copy(x, 0, sizeof(pila.top())-1);
+                    pila.insertapila("D");
+                //pila.top().copy(x, 0, sizeof(pila.top())-1);
+                x = pila.tope();
             }
         }
-        else //SI NO ES TOKEN(TERMINAL)
-        {
+        else{ //SI NO ES TOKEN(TERMINAL)
+            renglon = buscaTabla(a,x);
+            if(renglon != 999){
+                pila.eliminapila();
+                iast = 0;
+                printf("%-3s -> ", terminal[tablaM[renglon][0]].c_str());
+                for(j= 3; iast != 999; j++){
+                    iast = tablaM[renglon][j];  //999
+                    if(iast < 0){
+                        iast *= -1;
+                        printf("%s ",token[iast].c_str());
 
+                    }
+                    else{
+                        if(iast !=999)
+                            printf("%s", terminal[iast].c_str());
+                    }
+                }
+                printf("\n");
+                for(i = j-2; i > 2; i--){
+                    iast = tablaM[renglon][i];
+                    if(iast < 0){
+                        iast *= -1;
+                        pila.insertapila(token[iast]);
+                    }
+                    else
+                       pila.insertapila(terminal[iast]);
+                }
+            }
+            else{
+                printf("\n\n Error de Sintaxis ");
+                return;
+            }
         }
-    }while(strcmp(x,"$")!= 0);
-}
-
-int Sintactico::buscaTabla(string a[], string x[])
-{
-    int indx = 0;
-    int inda = 0, i;
-    for (i = 0; i < 15; i++)
-        if()
-
+    }while(x.compare("$")!= 0);
 
 }
 

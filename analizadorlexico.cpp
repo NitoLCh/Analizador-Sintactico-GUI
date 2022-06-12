@@ -75,7 +75,7 @@ void AnalizadorLexico::scanner(string cadena, string *resultado)
                 //se llama al metodo retrocederCar()
         case 5: retrocederCar();
                 //llama al metodo esReservada, donde recibe la variable reservada
-                if(esReservada(reservada)) //si es reservada entra al if, de lo contrario va al else
+                if(Reservada(reservada)) //si es reservada entra al if, de lo contrario va al else
                 {
                     //en la variable resultado se guarda y concatena "palabra reservada" y un salto de linea
                     *resultado += reservada;
