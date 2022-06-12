@@ -13,24 +13,24 @@ using namespace std;
 //----------------------------------------- NOSOTROS SOMOS MODULO SINTACTICO ----------------------------------------------------//
 #define MAXTOKEN 20
 #define NUMPALRES 4
-#define MAX 50
+#define MAX 50 // este se elimina porque no lo usamos en nuestra modificacion porque dejamos de usar la pila
 
 string PalRes[5] = {"char", "float", "int", "puts"};
-string sLexema[127];
-string sLinea[127];
-string non[6] = {"1","3","5","7","9"};
-string par[6] = {"2","4","6","8","0"};
+//string sLexema[127];
+//string sLinea[127];
+string non[6] = {"1","3","5","7","9"};//
+string par[6] = {"2","4","6","8","0"};//
 
 // QUITAMOS LOS METODOS DE ARCHIVOS Y LEXICOS
 string asTokens [MAXTOKEN];
-Pila pila;
+Pila pila;//Como tenemos una clase dinamica la estatica se desecha
 
 //Matriz para los tokens
 //                       1   2   3   4    5   6    7     8      9     10      11    12  13     14    15   16  17  18  19
 string token[20] = {"x",";",",","*","Id","[","]","Num","char","int","float","puts","(",")","Cte.Lit","=","+","$","{","}"};
 
 //Matriz para los terminales
-//                             1   2   3   4    5    6   7    8   9   10  11  12
+//                          1   2   3   4    5    6   7    8   9   10  11  12
 string terminal[13] = {"x","D","L","L'","I","I'","A","A'","K","T","F","E","P"};
 
 int tablaM[32][8] = {
@@ -90,7 +90,7 @@ Sintactico::Sintactico(){
 
 int Sintactico::buscaTabla(string a, string x){
     int indx=0, inda=0, i;
-    for(i = 0; i < 15; i++)
+    for(i = 0; i < 15; i++)// correccion cambiar a 20
         if(a.compare(token[i])==0)
             inda = i;     //break;
     for(i = 0; i < 13; i++)
@@ -115,9 +115,9 @@ void Sintactico::analizar(){
 
     //if(strcmp(asTokens[ip],"puts")== 0)
     if(asTokens[ip].compare("puts") == 0)
-        pila.insertapila("F");
+        pila.insertapila("F");// primera gramatica e inicia con F
     else
-        pila.insertapila("D");
+        pila.insertapila("D");// segunda gramatica e inicia con D
 
     //Salidas a pantalla
      printf("\nSalida del Analizador Sintactico (asTokens) \n\n");
@@ -127,7 +127,7 @@ void Sintactico::analizar(){
         printf("%s ", asTokens[i].c_str());
 
     printf("\n\n Producciones: \n\n");
-
+    //buscar tokens residuales como el ;
     do
     {
         //copy(pila.top(), x, pila.top());

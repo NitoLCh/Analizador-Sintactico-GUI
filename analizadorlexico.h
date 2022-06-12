@@ -18,6 +18,8 @@ public:
     string reservada = "";
 
     //palabras reservadas
+    //Sabemos que declarar estas variables aqui no es lo ideal, porque consumimos memoria
+    //y en ciertos casos no llegamos a utilizar todo
     char palabras[3][6] = {"int", "char", "float"};
     char op[5] = {'+','-', '*', '/', '%'};
 
@@ -35,7 +37,7 @@ public:
     bool esDelimitador(char c);
     bool esLetra(char c);
     bool esDigito(char c);
-    void operador(char, string)
+    void operador(char, string);
     //Pruneda se te olvido definir getTokens aca xD
     void getTokens(string *STokens);
 };
