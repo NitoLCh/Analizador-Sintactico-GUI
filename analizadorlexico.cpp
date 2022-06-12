@@ -368,6 +368,11 @@ void AnalizadorLexico::fallo()
             case 11: estadoInicial = 14; i = inicioToken; break;
             case 14: estadoInicial = 17; i = inicioToken; break;
             case 17: estadoInicial = 18; i= inicioToken;break;
+            case 19: estadoInicial = 20; i = inicioToken; break;
+            case 21: estadoInicial = 22; i= inicioToken;break;
+            case 23: estadoInicial = 24; i= inicioToken;break;
+            case 25: estadoInicial = 26; i = inicioToken; break;
+            case 26: estadoInicial = 28; i= inicioToken;break;
     }
     //guarda el valor de estado inicial en la variable estado actual
     estadoActual = estadoInicial;
@@ -388,6 +393,12 @@ bool AnalizadorLexico::estadoAceptacion()
             case 16:
             case 17:
             case 18:
+            case 20:
+            case 22:
+            case 24:
+            case 26:
+            case 28:
+
             return true;
             //por defecto regresa un false, tiene que entrar si o si en uno de los casos
             default: return false;
