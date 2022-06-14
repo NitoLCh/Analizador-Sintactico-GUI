@@ -9,7 +9,7 @@ using namespace std;
 class Archivos
 {
 public:
-    fstream Fd;
+    fstream Fd; //Identificador de archivo
     Archivos();
         void generarArchivo();
         void abrirArchivo();

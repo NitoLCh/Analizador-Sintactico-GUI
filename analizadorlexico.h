@@ -25,8 +25,6 @@ public:
     char palabras[3][6] = {"int", "char", "float"};
     char op[5] = {'+','-', '*', '/', '%'};
 
-
-
     Pila scanner();
     void inicializaEstados();
     void fallo();

@@ -56,7 +56,7 @@ void Archivos::generarArchivo(){
         if(caracter != '@')        //27 && car != 8)
             //escribe todo lo que guardo en buffer y lo guarda
             fd << caracter;
-    //El ciclo se mantiene mientas caracter sea diferente de "@"
+        //El ciclo se mantiene mientas caracter sea diferente de "@"
     }while(caracter != '@');
     //Se cierra el identificador del archivo
     fd.close();
@@ -112,7 +112,11 @@ int Archivos::bytesArchivo(){
     return aux;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+//Metodo para cerrar el archivo en uso
 void Archivos::cerrarArchivo(){
+    //se llama al identificador de archivo y se usa la funcion close()
     Fd.close();
 }
 
