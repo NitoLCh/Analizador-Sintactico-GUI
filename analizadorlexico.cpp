@@ -508,9 +508,9 @@ string *AnalizadorLexico::getResultado(){
 //-------------------------------------------------------------------------------------------------------------------------------//
 
 void AnalizadorLexico::mostrar(){
-    puts("\nTOKENS RECONOCIDOS : \n");
-    Pila copia = scanner();
 
+    puts("\nTOKENS RECONOCIDOS : ");
+    Pila copia = scanner();
     while(!copia.stck->empty())  //,Ren++)
     {
         puts(copia.tope().c_str());

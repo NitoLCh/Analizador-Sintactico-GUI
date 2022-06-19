@@ -51,18 +51,18 @@ int tablaM[32][8] = {
     {2, 3 , 2, 4, 3, 999, 999, 999},        // L, * PRODUCE -> L -> IL'
     {2, 4 , 2, 4, 3, 999, 999, 999},        // L, Id PRODUCE -> L -> IL'
     //-----------------------------------------------------------------------------//
-    /* 5 */    {3, 1, 3, 999, 999, 999, 999, 999},     // L', ; PRODUCE -> L' -> λ
+/*5*/{3, 1, 3, 999, 999, 999, 999, 999},    // L', ; PRODUCE -> L' -> λ
     {3, 2 , 3, -2, 5, 3, 999, 999},         // L', , PRODUCE -> L' -> ,I'L'     CORREGIDA
     {3, 3, 3, -3, 5, 3, 999, 999},          // L', * PRODUCE -> L' -> *I'L'     AGREGADA
     {3, 16, -16, 5, 3, 999, 999, 999},      // L', + PRODUCE -> L' -> +I'L'     AGREGADA
     {3, 18, 3, -18, 5, -19, 999, 999},      // L', { PRODUCE -> L' -> {I'}      AGREGADA
-    //{3, 19, 3, -19, 999, 999, 999, 999},    // L', } PRODUCE -> L' -> }       AGREGADA
+    //{3, 19, 3, -19, 999, 999, 999, 999},  // L', } PRODUCE -> L' -> }         AGREGADA
     //-----------------------------------------------------------------------------//
     {4, 3, 4, -3, -4, 5, 999, 999},         // I, * PRODUCE -> I -> *IdI'
     {4, 4, 4, -4, 5, 999, 999, 999},        // I, Id PRODUCE -> I -> IdI'
     //-----------------------------------------------------------------------------//
     {5, 1, 5, 999, 999, 999, 999, 999},     // I', ; PRODUCE -> I' -> λ
-    /* 10 */    {5, 2, 5, 999, 999, 999, 999, 999},     // I', , PRODUCE -> I' -> λ
+/*10*/{5, 2, 5, 999, 999, 999, 999, 999},   // I', , PRODUCE -> I' -> λ
     {5, 4, 5, -4, 999, 999, 999, 999},      // I', Id PRODUCE -> I' -> Id       AGREGADA
     {5, 5, 5, 6, 999, 999, 999, 999},       // I', [ PRODUCE -> I' -> A
     {5, 15, 5, -15, 5, 999, 999, 999},      // I', = PRODUCE -> I' -> =I'       AGREGADA
@@ -81,8 +81,8 @@ int tablaM[32][8] = {
     {8, 7, 8, -7, 999,999,999,999},         // K, num PRODUCE -> K -> num
     //-----------------------------------------------------------------------------//
     {9, 8, 9, -8,999,999,999,999},          // T, char PRODUCE -> T -> char
-    /* -> */   {9, 9, 9, -9,999,999,999,999},          // T, int PRODUCE -> T -> int
-    /* 20 */   {9, 10, 9, -10,999,999,999,999},        // T, float PRODUCE -> T -> float
+    {9, 9, 9, -9,999,999,999,999},          // T, int PRODUCE -> T -> int
+/*20*/{9, 10, 9, -10,999,999,999,999},      // T, float PRODUCE -> T -> float
     //----------------------------- segunda gramatica -----------------------------//
     {10, 11, 10, -11, 11, -1,999,999},      // F, puts PRODUCE -> F -> putsE    CORREGIDA
     //-----------------------------------------------------------------------------//
@@ -100,34 +100,48 @@ Sintactico::Sintactico(){
 
 //-------------------------------------------------------------------------------------------------------------------------------//
 
+//Metodo para buscar en la tabla M (La matriz que se encuentra al inicio)
 int Sintactico::buscaTabla(string a, string x){
     int indx=0, inda=0, i;
-    for(i = 0; i < 15; i++)// correccion cambiar a 20
-        if(a.compare(token[i])==0)
-            inda = i;     //break;
+    for(i = 0; i < 20; i++) // correccion cambiar a 20 (ya lo cambie a 20 c:)
+        //en el if se compara si "a" y los tokens(que reciben la posicion i del for) son iguales a 0
+        if(a.compare(token[i])==0){
+            inda = i; //de ser asi se le da a inda el valor que tenga el i del for
+            break; //y se rompe para evitar seguir en el for
+        }
     for(i = 0; i < 13; i++)
-        if(x.compare(terminal[i])==0)
-            indx=i;
+        //en el if se compara ahora x con los terminales (tambien recibe la posicion i del for)
+        if(x.compare(terminal[i])==0){
+            indx=i; //De ser asi se le da a indx el valor que tenga i
+            break;
+        }
+    //Ahora con los valores que tenemos de las variables inda e indx procederemos a buscar en la tabla M con otro for
     for(i = 0; i < 25; i++)
     {
+        //para ello el primer if comprueba si el valor de indx esta en la tabla M de la posicion i (la cual va con el contador for)
+        // y la posicion 0
         if(indx == tablaM[i][0])
+            //de ser asi entra en el siguiente if, el cual comprueba si el valor de inda existe en la posicion i y la 1 en la tabla M
             if(inda == tablaM[i][1])
+                //si los dos if se cumplen entonces retornamos i
                 return i;
     }
+    //de lo contrario solo retorna un valor que esta asignado como espacio vacio
     return 999;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------//
 
+//Metodo que compara y comprueba si es token
 int Sintactico::estoken(string x){
-    int i;
 
-    for(i=0; i<23; i++)
-    {
+    int i;
+    for(i=0; i<23; i++){
+        //se toma x y se compara con los tokens, si esto es igual a 0 entonces retorna true (es token)
         if(x.compare(token[i]) == 0)
             return 1;
     }
-
+    //de lo contrario solo retorna false
     return 0;
 }
 

@@ -31,3 +31,9 @@ void Dialog::on_pushButton_3_clicked()
     ui->textEdit_2->setText("");
     ui->textEdit_3->setText("");
 }
+
+void Dialog::on_pushButton_5_clicked()
+{
+    exit(-1);
+}
+

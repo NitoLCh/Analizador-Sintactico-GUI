@@ -200,7 +200,7 @@ background-color: rgb(51, 0, 76);</string>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>450</x>
      <y>300</y>
      <width>80</width>
      <height>21</height>
@@ -225,7 +225,7 @@ color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>100</x>
      <y>300</y>
      <width>111</width>
      <height>21</height>
@@ -245,6 +245,31 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Guardar Archivo</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_5">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>300</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(51, 0, 76);
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Salir</string>
    </property>
   </widget>
  </widget>
